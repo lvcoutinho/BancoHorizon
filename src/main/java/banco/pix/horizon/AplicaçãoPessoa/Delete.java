@@ -7,6 +7,6 @@ public class Delete {
     public static void main(String[] args){
 
     PessoaDAO dao = new PessoaDAO();
-    dao.delete(5L);
+    dao.delete(9L);
 }
 }

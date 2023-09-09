@@ -19,12 +19,8 @@ public class ListarConta {
             System.out.println("DIGITO: " + conta.getDigito());
             System.out.println("SALDO: " + conta.getSaldo());
 
-            String tipoConta;
-            if (conta.getTipo_conta().equals("corrente")) {
-                tipoConta = "Poupança";
-            } else {
-                tipoConta = "Corrente";
-            }
+            String tipoConta = conta.getTipo_conta();
+
             System.out.println("TIPO DE CONTA: " + tipoConta);
             System.out.println("====================================================");
         }
