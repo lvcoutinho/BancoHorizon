@@ -1,6 +1,6 @@
 # BancoHorizon
 
-Este é um sistema bancário em Java chamado "Agência Horizon". Ele permite a criação de contas bancárias, depósitos, saques, transferências e muito mais.
+Este é um sistema bancário em Java chamado "Agência Horizon". Ele permite a criação de contas bancárias, depósitos, saques, transferências.
 
 ## Funcionalidades Principais
 
