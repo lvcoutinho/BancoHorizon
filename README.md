@@ -53,6 +53,7 @@ Este projeto é fornecido como uma base de aprendizado e pode ser personalizado 
 
 - Primeira table (Pessoa):
 
+
 - -- Table: public.pessoa
 
 -- DROP TABLE IF EXISTS public.pessoa;
@@ -71,7 +72,9 @@ TABLESPACE pg_default;
 ALTER TABLE IF EXISTS public.pessoa
     OWNER to postgres;
 
+
 - Segunda table (Conta):
+
 
 - -- Table: public.conta
 
@@ -97,7 +100,9 @@ TABLESPACE pg_default;
 ALTER TABLE IF EXISTS public.conta
     OWNER to postgres;
 
+
 - Terceira table (Transferencia):
+
 
 - -- Table: public.transferencia
 
