@@ -46,3 +46,82 @@ Este é um sistema bancário em Java chamado "Agência Horizon". Ele permite a c
 ## Contribuições
 
 Este projeto é fornecido como uma base de aprendizado e pode ser personalizado e expandido de acordo com suas necessidades. Se você encontrar problemas ou quiser adicionar mais recursos, sinta-se à vontade para contribuir com o projeto.
+
+## Query do Banco de dados 
+
+(PostgreSQL)
+
+- Primeira table (Pessoa):
+
+- -- Table: public.pessoa
+
+-- DROP TABLE IF EXISTS public.pessoa;
+
+CREATE TABLE IF NOT EXISTS public.pessoa
+(
+    id bigint NOT NULL DEFAULT nextval('pessoa_id_seq'::regclass),
+    nome character varying COLLATE pg_catalog."default",
+    telefone character varying COLLATE pg_catalog."default",
+    cpf character varying COLLATE pg_catalog."default",
+    CONSTRAINT pessoa_pkey PRIMARY KEY (id)
+)
+
+TABLESPACE pg_default;
+
+ALTER TABLE IF EXISTS public.pessoa
+    OWNER to postgres;
+
+- Segunda table (Conta):
+
+- -- Table: public.conta
+
+-- DROP TABLE IF EXISTS public.conta;
+
+CREATE TABLE IF NOT EXISTS public.conta
+(
+    id bigint NOT NULL DEFAULT nextval('conta_id_seq'::regclass),
+    pessoa_id integer,
+    numero integer,
+    digito integer,
+    saldo numeric,
+    tipo_conta character varying COLLATE pg_catalog."default",
+    CONSTRAINT conta_pkey PRIMARY KEY (id),
+    CONSTRAINT conta_pessoa_id_fkey FOREIGN KEY (pessoa_id)
+        REFERENCES public.pessoa (id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION
+)
+
+TABLESPACE pg_default;
+
+ALTER TABLE IF EXISTS public.conta
+    OWNER to postgres;
+
+- Terceira table (Transferencia):
+
+- -- Table: public.transferencia
+
+-- DROP TABLE IF EXISTS public.transferencia;
+
+CREATE TABLE IF NOT EXISTS public.transferencia
+(
+    id bigint NOT NULL DEFAULT nextval('transferencia_id_seq'::regclass),
+    conta_origem_id integer,
+    conta_destino_id integer,
+    valor numeric,
+    data date,
+    CONSTRAINT transferencia_pkey PRIMARY KEY (id),
+    CONSTRAINT transferencia_conta_destino_id_fkey FOREIGN KEY (conta_destino_id)
+        REFERENCES public.conta (id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION,
+    CONSTRAINT transferencia_conta_origem_id_fkey FOREIGN KEY (conta_origem_id)
+        REFERENCES public.conta (id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION
+)
+
+TABLESPACE pg_default;
+
+ALTER TABLE IF EXISTS public.transferencia
+    OWNER to postgres;
