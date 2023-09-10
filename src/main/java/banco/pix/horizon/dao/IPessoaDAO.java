@@ -12,4 +12,5 @@ public interface IPessoaDAO {
     void delete(Long id);
     List<Pessoa> findAll();
     Optional<Pessoa> findById(Long id);
+    Optional<Pessoa> findByNumeroConta(int numero);
 }

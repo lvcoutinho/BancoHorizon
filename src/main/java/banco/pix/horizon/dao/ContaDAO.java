@@ -116,7 +116,6 @@ public class ContaDAO implements IContaDAO {
 
         return contas;
     }
-
     @Override
     public Conta findContaById(Long id) {
         String sql = "SELECT c.id, c.pessoa_id, c.numero, c.digito, " +
@@ -139,9 +138,7 @@ public class ContaDAO implements IContaDAO {
                 int numero = rs.getInt("numero");
                 int digito = rs.getInt("digito");
                 BigDecimal saldo = rs.getBigDecimal("saldo");
-
-                int tipo_conta = rs.getInt("tipo_conta");
-                String tipoConta = (tipo_conta == 0) ? "corrente" : "poupança";
+                String tipoConta = rs.getString("tipo_conta");
 
                 conta = new Conta(id, pessoa_id, nomePessoa, numero, digito, saldo, tipoConta);
             }
@@ -151,4 +148,33 @@ public class ContaDAO implements IContaDAO {
 
         return conta;
     }
+
+
+    @Override
+    public Conta findContaByNumero(int numero) {
+        String sql = "SELECT * FROM Conta WHERE numero = ?";
+
+        try (Connection connection = ConnectionFactory.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+
+            preparedStatement.setInt(1, numero);
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            if (resultSet.next()) {
+                Long id = resultSet.getLong("id");
+                Long pessoaId = resultSet.getLong("pessoa_id");
+                numero = resultSet.getInt("numero");
+                int digito = resultSet.getInt("digito");
+                BigDecimal saldo = resultSet.getBigDecimal("saldo");
+                String tipoConta = resultSet.getString("tipo_conta");
+
+                return new Conta();
+            }
+
+        } catch (SQLException ex) {
+            throw new RuntimeException(ex);
+        }
+        return null;
+    }
+
 }

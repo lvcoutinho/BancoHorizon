@@ -14,9 +14,9 @@ public class Update {
 
         Pessoa pessoa = pessoaOptional.get();
 
-        pessoa.setNome("Juliana");
-        pessoa.setTelefone("(71)991130103");
-        pessoa.setCpf("387.423.648-37");
+        pessoa.setNome("Guri");
+        pessoa.setTelefone("(71)94843738");
+        pessoa.setCpf("354.489.648-37");
 
         dao.update(pessoa);
     }

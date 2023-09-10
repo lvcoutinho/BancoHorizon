@@ -1,25 +1,39 @@
 package banco.pix.horizon.dao;
 
+import banco.pix.horizon.infra.ConnectionFactory;
 import banco.pix.horizon.model.Transferencia;
 
-public class TransferenciaDAO implements ITransferenciaDAO{
-    @Override
-    public double consultarSaldo(Transferencia transferencia) {
-        return 0;
-    }
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.Statement;
 
-    @Override
-    public boolean depositar(Transferencia transferencia) {
-        return false;
-    }
+public class TransferenciaDAO implements ITransferenciaDAO {
 
-    @Override
-    public boolean transferir(Transferencia transferencia) {
-        return false;
-    }
+    public Transferencia save(Transferencia transferencia) {
+        try (Connection connection = ConnectionFactory.getConnection()) {
+            String sql = "INSERT INTO transferencia (conta_origem_id, conta_destino_id, valor, data) VALUES (?, ?, ?, ?)";
 
-    @Override
-    public boolean sacar(Transferencia transferencia) {
-        return false;
+            PreparedStatement preparedStatement = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+            preparedStatement.setLong(1, transferencia.getConta_origem_id());
+            preparedStatement.setLong(2, transferencia.getConta_destino_id());
+            preparedStatement.setBigDecimal(3, transferencia.getValor());
+            preparedStatement.setObject(4, transferencia.getData());
+
+            int rowsAffected = preparedStatement.executeUpdate();
+
+            if (rowsAffected > 0) {
+                ResultSet generatedKeys = preparedStatement.getGeneratedKeys();
+                if (generatedKeys.next()) {
+                    long id = generatedKeys.getLong(1);
+                    transferencia.setId(id);
+                    return transferencia;
+                }
+            }
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+
+        return null;
     }
 }

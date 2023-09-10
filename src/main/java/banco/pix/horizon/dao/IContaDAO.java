@@ -11,4 +11,5 @@ public interface IContaDAO {
     void deleteConta(Long id);
     List<Conta> findAll();
     Conta findContaById(Long id);
+    Conta findContaByNumero(int numero);
 }

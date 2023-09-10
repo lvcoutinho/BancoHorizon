@@ -12,7 +12,7 @@ public class Save {
         PessoaDAO dao = new PessoaDAO();
         Pessoa pessoa = new Pessoa();
 
-        pessoa.setNome("Mari");
+        pessoa.setNome("Momi");
         pessoa.setTelefone("(71)994738290");
         pessoa.setCpf("068.777.777-28");
 

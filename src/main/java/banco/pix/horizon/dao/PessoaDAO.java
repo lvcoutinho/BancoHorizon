@@ -123,4 +123,31 @@ public class PessoaDAO implements IPessoaDAO {
 
         return Optional.ofNullable(pessoa);
     }
+
+    @Override
+    public Optional<Pessoa> findByNumeroConta(int numero) {
+        String sql = "SELECT p.id, p.nome, p.telefone, p.cpf FROM Pessoa p " +
+                "JOIN Conta c ON p.id = c.pessoa_id " +
+                "WHERE c.numero = ?";
+
+        Pessoa pessoa = null;
+        try (Connection connection = ConnectionFactory.getConnection()) {
+            PreparedStatement preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setInt(1, numero);
+
+            ResultSet rs = preparedStatement.executeQuery();
+
+            while (rs.next()) {
+                Long id = rs.getLong("id");
+                String nome = rs.getString("nome");
+                String telefone = rs.getString("telefone");
+                String cpf = rs.getString("cpf");
+
+                pessoa = new Pessoa(id, nome, telefone, cpf);
+            }
+        } catch (SQLException ex) {
+            throw new RuntimeException(ex);
+        }
+        return Optional.ofNullable(pessoa);
+    }
 }

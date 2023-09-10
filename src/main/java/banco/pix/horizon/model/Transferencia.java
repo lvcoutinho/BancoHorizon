@@ -1,5 +1,6 @@
 package banco.pix.horizon.model;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 
 public class Transferencia {
@@ -7,11 +8,11 @@ public class Transferencia {
     private Long id;
     private Long conta_origem_id;
     private Long conta_destino_id;
-    private double valor;
+    private BigDecimal valor;
     private LocalDate data;
 
 
-public Transferencia(Long id, Long conta_origem_id, Long conta_destino_id, double valor, LocalDate data){
+public Transferencia(){
     this.id = id;
     this.conta_origem_id = conta_origem_id;
     this.conta_destino_id = conta_destino_id;
@@ -43,11 +44,11 @@ public Transferencia(Long id, Long conta_origem_id, Long conta_destino_id, doubl
         this.conta_destino_id = conta_destino_id;
     }
 
-    public double getValor() {
+    public BigDecimal getValor() {
         return valor;
     }
 
-    public void setValor(double valor) {
+    public void setValor(BigDecimal valor) {
         this.valor = valor;
     }
 
